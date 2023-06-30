@@ -46,7 +46,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3000/api",
+  "proxy": "https://mosut0.github.io/SEG3125-Project2/",
   "devDependencies": {
     "gh-pages": "^5.0.0"
   }
