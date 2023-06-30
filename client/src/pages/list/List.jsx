@@ -16,7 +16,7 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
 
-  const {data, loading, error, refetch} = useFetch(`/hotels?city=${destination}`)
+  const {data, loading, error, refetch} = useFetch(`http://localhost:5000/api/hotels?city=${destination.charAt(0).toUpperCase() + destination.slice(1)}`)
 
   return (
     <div style={{overflowX : "hidden"}}>

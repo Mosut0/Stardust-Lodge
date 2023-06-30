@@ -5,7 +5,7 @@ import authRoute from "./routes/auth.js"
 import usersRoute from "./routes/users.js"
 import hotelsRoute from "./routes/hotels.js"
 import roomsRoute from "./routes/rooms.js"
-
+import cors from "cors"
 
 const app = express()
 dotenv.config()
@@ -22,6 +22,8 @@ const connect = async ()=>{
 mongoose.connection.on("disconnected", ()=>{
     console.log("mongoDB disconnected")
 })
+
+app.use(cors({exposedHeaders: 'Authorization'}))
 
 app.use(express.json())
 
