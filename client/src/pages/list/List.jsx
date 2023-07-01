@@ -2,21 +2,34 @@ import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import useFetch from "../../fetch/useFetch";
 import SearchItem from "../../components/searchItem/SearchItem";
 import Footer from "../../components/footer/Footer"
+import { SearchContext } from "../../context/SearchContext";
 
 const List = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
 
-  const {data, loading, error, refetch} = useFetch(`https://seg125-f269f11245e5.herokuapp.com/api/hotels?city=${destination.charAt(0).toUpperCase() + destination.slice(1)}`)
+  const apiUrl = destination
+  ? `http://localhost:5000/api/hotels?city=${destination.charAt(0).toUpperCase() + destination.slice(1)}&min=${min || 0}&max=${max || 1000}`
+  : `http://localhost:5000/api/hotels?min=${min || 0}&max=${max || 1000}`;
+
+  const { data, loading, error, reFetch } = useFetch(apiUrl);
+  const {dispatch} = useContext(SearchContext)
+
+  const handleClick = () =>{
+    dispatch({type:"NEW_SEARCH", payload:{destination, dates, options}})
+    reFetch();
+  }
 
   return (
     <div style={{overflowX : "hidden"}}>
@@ -28,19 +41,19 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input value={destination} type="text" onChange={e=>setDestination(e.target.value)} />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
               <span onClick={() => setOpenDate(!openDate)}>{`${format(
-                date[0].startDate,
+                dates[0].startDate,
                 "MM/dd/yyyy"
-              )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+              )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
               {openDate && (
                 <DateRange
-                  onChange={(item) => setDate([item.selection])}
+                  onChange={(item) => setDates([item.selection])}
                   minDate={new Date()}
-                  ranges={date}
+                  ranges={dates}
                 />
               )}
             </div>
@@ -51,13 +64,13 @@ const List = () => {
                   <span className="lsOptionText">
                     Min price <small>per night</small>
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <input type="number" onChange={e=>setMin(e.target.value)} min={0} className="lsOptionInput" />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
                     Max price <small>per night</small>
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <input type="number" onChange={e=>setMax(e.target.value)} min={0} className="lsOptionInput" />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Adult</span>
@@ -88,7 +101,7 @@ const List = () => {
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <button onClick={() => handleClick()}>Search</button>
           </div>
           <div className="listResult">
             {loading ? "Loading..." : <>

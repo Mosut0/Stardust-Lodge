@@ -16,7 +16,7 @@ const SearchItem = ({item}) => {
           {item.desc}
         </span>
         <span className="siFeatures">
-          {item.rooms} rooms
+          {item.rooms} rooms available
         </span>
       </div>
       <div className="siDetails">

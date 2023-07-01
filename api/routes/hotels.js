@@ -34,7 +34,7 @@ router.put("/:id", async (req, res)=>{
 })
 
 //get
-router.get("/:id", async (req, res)=>{
+router.get("/find/:id", async (req, res)=>{
     
     try{
         const hotel = await Hotel.findById(req.params.id);
