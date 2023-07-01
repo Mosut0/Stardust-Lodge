@@ -6,6 +6,11 @@ import usersRoute from "./routes/users.js"
 import hotelsRoute from "./routes/hotels.js"
 import roomsRoute from "./routes/rooms.js"
 import cors from "cors"
+import path from "path"
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express()
 dotenv.config()
@@ -24,8 +29,9 @@ mongoose.connection.on("disconnected", ()=>{
 })
 
 app.use(cors({exposedHeaders: 'Authorization'}))
-
 app.use(express.json())
+
+app.use(express.static(path.join(__dirname,"../client/build")));
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
@@ -42,6 +48,10 @@ app.use((err, req, res, next)=>{
         stack:err.stack,
     })
 })
+
+app.get('/*', (req,res) =>{
+    res.sendFile(path.join(__dirname,"../client/build/index.html"));
+});
 
 app.listen(5000, ()=>{
     connect()
