@@ -20,8 +20,8 @@ const List = () => {
   const [max, setMax] = useState(undefined);
 
   const apiUrl = destination
-  ? `http://localhost:5000/api/hotels?city=${destination.charAt(0).toUpperCase() + destination.slice(1)}&min=${min || 0}&max=${max || 1000}`
-  : `http://localhost:5000/api/hotels?min=${min || 0}&max=${max || 1000}`;
+  ? `https://seg125-f269f11245e5.herokuapp.com/api/hotels?city=${destination.charAt(0).toUpperCase() + destination.slice(1)}&min=${min || 0}&max=${max || 1000}`
+  : `https://seg125-f269f11245e5.herokuapp.com/api/hotels?min=${min || 0}&max=${max || 1000}`;
 
   const { data, loading, error, reFetch } = useFetch(apiUrl);
   const {dispatch} = useContext(SearchContext)
