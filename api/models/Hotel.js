@@ -36,8 +36,8 @@ const HotelSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  status:{
-    type: String,
+  reviews:{
+    type: Array,
     required: true
   }
 });

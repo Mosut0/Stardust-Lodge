@@ -4,13 +4,17 @@ import { Link } from "react-router-dom";
 const SearchItem = ({item}) => {
   return (
     <div className="searchItem">
-      <img
-        src={item.photos[0]}
-        alt=""
-        className="siImg"
-      />
+      <Link to={`/hotels/${item._id}`}>
+        <img
+          src={item.photos[0]}
+          alt=""
+          className="siImg"
+        />
+      </Link>
       <div className="siDesc">
-        <h1 className="siTitle">{item.name}</h1>
+        <Link to={`/hotels/${item._id}`} style={{ textDecoration: 'none' }}>
+          <h1 className="siTitle">{item.name}</h1>
+        </Link>
         <span className="siDistance">{item.city}, {item.country}</span>
         <span className="siSubtitle">
           {item.desc}

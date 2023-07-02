@@ -1,6 +1,7 @@
 import "./list.css";
+import "../../components/dropdown/dropdown.css"
 import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
+import Slider from "@mui/material/Slider";
 import { useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import { format } from "date-fns";
@@ -9,6 +10,8 @@ import useFetch from "../../fetch/useFetch";
 import SearchItem from "../../components/searchItem/SearchItem";
 import Footer from "../../components/footer/Footer"
 import { SearchContext } from "../../context/SearchContext";
+import { faCaretDown, faCaretUp, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const List = () => {
   const location = useLocation();
@@ -16,14 +19,29 @@ const List = () => {
   const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
-  const [min, setMin] = useState(undefined);
-  const [max, setMax] = useState(undefined);
+  const [range, setRange] = useState([0, 1000]);
+  const [isActive, setIsActive] = useState(false)
+  const destinations = [
+      { value: 'All', label: 'All' },
+      { value: 'Toronto, Canada', label: 'Toronto, Canada' },
+      { value: 'London, England', label: 'London, England' },
+      { value: 'Paris, France', label: 'Paris, France' },
+      { value: 'Dublin, Ireland', label: 'Dublin, Ireland' },
+  ];
+  const [openOptions, setOpenOptions] = useState(true)
 
-  const apiUrl = destination
-  ? `https://seg125-f269f11245e5.herokuapp.com/api/hotels?city=${destination.charAt(0).toUpperCase() + destination.slice(1)}&min=${min || 0}&max=${max || 1000}`
-  : `https://seg125-f269f11245e5.herokuapp.com/api/hotels?min=${min || 0}&max=${max || 1000}`;
+  function apiUrl(){
+    let url = `https://seg125-f269f11245e5.herokuapp.com/api/hotels?`;
+    if(destination == "All" || destination == ""){
+      url += `city=Toronto&city=London&city=Paris&city=Dublin&min=${range[0] || 0}&max=${range[1] || 1000}&rooms=${options.room}`
+    } else {
+      url += `city=${destination.split(',')[0]}&min=${range[0] || 0}&max=${range[1] || 1000}&rooms=${options.room}`;
+    }
+    return url;
+  }
 
-  const { data, loading, error, reFetch } = useFetch(apiUrl);
+  console.log(apiUrl())
+  const { data, loading, error, reFetch } = useFetch(apiUrl());
   const {dispatch} = useContext(SearchContext)
 
   const handleClick = () =>{
@@ -31,17 +49,53 @@ const List = () => {
     reFetch();
   }
 
+  function handleChanges(event, newValue) {
+    console.log(newValue);
+    setRange(newValue);
+  }
+
+  const handleOption = (name, operation) => {
+    setOptions(prev=>{
+        return {
+        ...prev, 
+        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
+        };
+    });
+  };
+
   return (
     <div style={{overflowX : "hidden"}}>
       <Navbar />
-      <Header type="list" />
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input value={destination} type="text" onChange={e=>setDestination(e.target.value)} />
+              <div className="dropdown2">
+                <div className="dropdown-btn2" onClick={e => setIsActive(!isActive)}>
+                    {destination === "" ? "All" : destination}
+                    {isActive ? <FontAwesomeIcon icon={faCaretUp}/> : <FontAwesomeIcon icon={faCaretDown}/>}
+                </div>
+                {isActive && (
+                    <div className="dropdown-content2">
+                        {destinations.map((location) =>(
+                            <div
+                                onClick={(e) => {
+                                    setDestination(location.value);
+                                    setIsActive(false);
+                                }}
+                                className="dropdown-item2"
+                                key={location.key}
+                                value={location.value}
+                                {...console.log(destination)}
+                            >
+                                {location.value}
+                            </div>
+                        ))}
+                    </div>
+                )}
+              </div>
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -60,45 +114,55 @@ const List = () => {
             <div className="lsItem">
               <label>Options</label>
               <div className="lsOptions">
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Min price <small>per night</small>
-                  </span>
-                  <input type="number" onChange={e=>setMin(e.target.value)} min={0} className="lsOptionInput" />
+                <div class="price-text">
+                  <div>
+                    Min price <small><br/>per night</small>
+                  </div>
+                  <div class="separator"/>
+                  <div>
+                    Max price <small><br/>per night</small>
+                  </div>
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Max price <small>per night</small>
-                  </span>
-                  <input type="number" onChange={e=>setMax(e.target.value)} min={0} className="lsOptionInput" />
+                <div class="price-input">
+                  <div class="field">
+                    <input type="number" value={range[0]} onChange={e=>setRange([e.target.value, range[1]])} max={0}/>
+                  </div>
+                  <div class="separator">-</div>
+                  <div class="field">
+                    <input type="number" value={range[1]} onChange={e=>setRange([range[0], e.target.value])} min={0}/>
+                  </div>
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    placeholder={options.adult}
-                  />
+                <div style = {{ width: "23.5rem", position: "relative"}}>
+                  <Slider value = {range} onChange = {handleChanges} valueLabelDisplay="auto" step={10} max={1000} disableSwap/>
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    placeholder={options.room}
-                  />
-                </div>
+                <div className="headerSearchItem">
+                    {openOptions && <div className="options2">
+                        <div className="optionItem2">
+                            <span className="optionText2">Adult(s)</span>
+                            <div className="optionCounter2">
+                                <button disabled={options.adult <= 1} className="optionCounterButton2" onClick={()=>handleOption("adult", "d")}>-</button>
+                                <span className="optionCounterNumber2">{options.adult}</span>
+                                <button className="optionCounterButton2" onClick={()=>handleOption("adult", "i")}>+</button>
+                            </div>
+                        </div>
+                        <div className="optionItem2">
+                            <span className="optionText2">Children</span>
+                            <div className="optionCounter2">
+                                <button disabled={options.children <= 0} className="optionCounterButton2" onClick={()=>handleOption("children", "d")}>-</button>
+                                <span className="optionCounterNumber2">{options.children}</span>
+                                <button className="optionCounterButton2" onClick={()=>handleOption("children", "i")}>+</button>
+                            </div>
+                        </div>
+                        <div className="optionItem2">
+                            <span className="optionText2">Room(s)</span>
+                            <div className="optionCounter2">
+                                <button disabled={options.room <= 1} className="optionCounterButton2" onClick={()=>handleOption("room", "d")}>-</button>
+                                <span className="optionCounterNumber2">{options.room}</span>
+                                <button className="optionCounterButton2" onClick={()=>handleOption("room", "i")}>+</button>
+                            </div>
+                        </div>
+                    </div>}
+                  </div>
               </div>
             </div>
             <button onClick={() => handleClick()}>Search</button>

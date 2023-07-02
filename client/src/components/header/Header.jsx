@@ -1,4 +1,4 @@
-import { faBed, faCalendarDays, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { faBed, faCalendarDays, faPerson, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { DateRange } from "react-date-range";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 
 const Header = ({type}) => {
+    const [selectedOption, setSelectedOption] = useState('Where would you like to go?');
     const [destination, setDestination] = useState("")
     const [openDate, setOpenDate] = useState(false)
     const [dates, setDates] = useState([
@@ -37,6 +38,10 @@ const Header = ({type}) => {
         });
     };
 
+    const handleSelectChange = (e) => {
+        setDestination(e.target.value);
+    };
+
     const {dispatch} = useContext(SearchContext)
 
     const handleSearch = () => {
@@ -44,26 +49,42 @@ const Header = ({type}) => {
         navigate("/hotels", { state: {destination, dates, options} })
     };
 
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    const handleOptionClick = (option) => {
+        setSelectedOption(`${option}`);
+        setDestination(`${option}`)
+        document.getElementById("myDropdown").classList.remove("show");
+    };
+    
     return (
         <div className="header">
             <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
             {type !== "list" && (
                 <>
-                <h1 className="headerTitle">A lifetime of discounts? It's Genius.</h1>
+                <h1 className="headerTitle">Looking for somewhere to stay?</h1>
                 <p className="headerDesc">
-                    Get rewarded for your travels - unlock instant savings of 10% or more with
-                    a free Stardust Lodge account
+                    Search for hotels - find instant savings and discounts at our best locations!
                 </p>
                 <button className="headerBtn">Sign in / Register</button>
                 <div className="headerSearch">
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faBed} className="headerIcon"/>
-                        <input 
-                            type="text" 
-                            placeholder="Where are you going?" 
-                            className="headerSearchInput"
-                            onChange={e=>setDestination(e.target.value)}
-                        />
+                        <div className="dropdown">
+                            <span className="dropbtn" onClick={myFunction}>
+                                {selectedOption}
+                                <FontAwesomeIcon icon={faCaretDown} style={{ paddingLeft: '10px' }} />
+                            </span>
+                            <div className="dropdown-content" id="myDropdown">
+                                <a href="#" onClick={() => handleOptionClick('All')}>All</a>
+                                <a href="#" onClick={() => handleOptionClick('Toronto, Canada')}>Toronto, Canada</a>
+                                <a href="#" onClick={() => handleOptionClick('London, England')}>London, England</a>
+                                <a href="#" onClick={() => handleOptionClick('Paris, France')}>Paris, France</a>
+                                <a href="#" onClick={() => handleOptionClick('Dublin, Ireland')}>Dublin, Ireland</a>
+                            </div>
+                        </div>
                     </div>
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faCalendarDays} className="headerIcon"/>
@@ -80,10 +101,10 @@ const Header = ({type}) => {
                     </div>
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faPerson} className="headerIcon"/>
-                        <span onClick={()=>setOpenOptions(!openOptions)} className="headerSearchText">{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
+                        <span onClick={()=>setOpenOptions(!openOptions)} className="headerSearchText">{`${options.adult} adult(s) · ${options.children} children · ${options.room} room(s)`}</span>
                         {openOptions && <div className="options">
                             <div className="optionItem">
-                                <span className="optionText">Adult</span>
+                                <span className="optionText">Adult(s)</span>
                                 <div className="optionCounter">
                                     <button disabled={options.adult <= 1} className="optionCounterButton" onClick={()=>handleOption("adult", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.adult}</span>
@@ -99,7 +120,7 @@ const Header = ({type}) => {
                                 </div>
                             </div>
                             <div className="optionItem">
-                                <span className="optionText">Room</span>
+                                <span className="optionText">Room(s)</span>
                                 <div className="optionCounter">
                                     <button disabled={options.room <= 1} className="optionCounterButton" onClick={()=>handleOption("room", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.room}</span>

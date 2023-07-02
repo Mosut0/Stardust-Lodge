@@ -46,9 +46,9 @@ router.get("/find/:id", async (req, res)=>{
 
 //get all
 router.get("/", async (req, res, next)=>{
-    const {min, max, ...others} = req.query;
+    const {min, max, rooms, ...others} = req.query;
     try{
-        const hotels = await Hotel.find({...others, cheapestPrice:{$gt:min | 1, $lt:max || 1000}}).limit(req.query.limit);
+        const hotels = await Hotel.find({...others, cheapestPrice:{$gt:min | 1, $lt:max || 1000}, rooms:{$gte:rooms}}).limit(req.query.limit);
         res.status(200).json(hotels);
     }catch(err){
         next(err)

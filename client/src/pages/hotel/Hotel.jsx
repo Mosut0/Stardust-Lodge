@@ -10,20 +10,22 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useContext } from "react";
+import { useForm } from "react-cool-form";
 import { useLocation } from "react-router-dom";
 import useFetch from "../../fetch/useFetch";
 import { SearchContext } from "../../context/SearchContext";
+import Rating from '@mui/material/Rating';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
 const Hotel = () => {
   const location = useLocation()
   const hotel_id = location.pathname.split('/')[2]
-  
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-
   const { data, loading, error, reFetch } = useFetch(`https://seg125-f269f11245e5.herokuapp.com/api/hotels/find/${hotel_id}`);
-
   const {dates, options} = useContext(SearchContext)
+  const [ratingValue, setRatingValue] = useState(0);
 
   function numberOfNights(date1, date2) {
     const msPerDay = 1000 * 60 *60 *24;
@@ -39,6 +41,7 @@ const Hotel = () => {
   }else {
     nights = numberOfNights(dates[0].endDate, dates[0].startDate);
   }
+  if(nights == 0) nights++;
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -57,10 +60,56 @@ const Hotel = () => {
     setSlideNumber(newSlideNumber)
   };
 
+  const handleSubmitReview = () =>{
+    // Declare the invalid-input class dynamically
+    var invalidInputClass = "invalid-input";
+    var invalidInputStyle = document.createElement("style");
+    invalidInputStyle.innerHTML = "." + invalidInputClass + " { border: 1px solid red;}";
+    document.head.appendChild(invalidInputStyle);
+
+    // Get input elements
+    var fullNameInput = document.getElementById("fullname");
+    var reviewInput = document.getElementById("message");
+    var ratingInput = document.getElementById("rating");
+
+    // Remove previous invalid input highlighting
+    fullNameInput.classList.remove(invalidInputClass);
+    reviewInput.classList.remove(invalidInputClass);
+    ratingInput.classList.remove(invalidInputClass);
+
+    // Get input values
+    var fullName = fullNameInput.value.trim();
+    var review = reviewInput.value.trim();
+    console.log(ratingValue)
+
+    var missing = false;
+
+    // Check if inputs are empty
+    if (fullName === "") {
+        fullNameInput.classList.add(invalidInputClass);
+        missing = true;
+    }
+    if (review === "") {
+      reviewInput.classList.add(invalidInputClass);
+      missing = true;
+    }
+    if (ratingValue === 0) {
+      ratingInput.classList.add(invalidInputClass);
+      missing = true;
+    }
+
+    if(!missing){
+      fullNameInput.value = "";
+      reviewInput.value = "";
+      setRatingValue(0);
+
+      document.getElementById("thanksReview").style.display = "block";
+    }
+  }
+
   return (
     <div>
       <Navbar />
-      <Header type="list" />
       {loading ? "Loading..." : <div className="hotelContainer">
         {open && (
           <div className="slider">
@@ -113,10 +162,51 @@ const Hotel = () => {
             <div className="hotelDetailsPrice">
               <h1>Perfect for a {nights}-night stay!</h1>
               <h2>
-                <b>{data.cheapestPrice * nights}$</b> ({nights} nights)
+                <b>{data.cheapestPrice * nights}$</b> {nights} night(s)
               </h2>
               <button>Reserve or Book Now!</button>
             </div>
+          </div>
+          <div className="reviewsContainer">
+            <h1>Reviews</h1>
+            <div className="reviewCards">
+              {data.reviews?.map((review, index) => (
+                <div className="reviewCard" key={index}>
+                  <div className="reviewHeader">
+                    <div className="reviewerInfo">
+                      <h3>{review.reviewer}</h3>
+                      <div className="rating">
+                        <button>{review.rating}</button>
+                      </div>
+                    </div>
+                  </div>
+                  <p>"{review.review}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="userReview">
+            <h2>Write a Review</h2>
+            <form>
+              <div className="form-group">
+                <label className="formFN" htmlFor="fullname">Full Name *
+                <input type="text" className="form-control" id="fullname" placeholder="Enter full name" required=""/>
+                </label>
+              </div>
+              <div className="form-group">
+                <label className="formFN" htmlFor="message">Your Review *
+                <textarea type="text" className="form-control" rows="4" id="message" placeholder="Enter review" required=""/>
+                </label>
+              </div>
+              <label id="ratingTitle" className="formFN" htmlFor="rating">Your Rating *</label>
+              <div>
+              <Rating onChange={(event, value) => setRatingValue(value)} id="rating" name="size-large" defaultValue={0} size="large" style={{marginTop: "5px"}}/>
+              </div>
+            </form>
+            <Button id="submitBtn" onClick={() => handleSubmitReview()} style={{marginTop: "10px"}} variant="contained" endIcon={<SendIcon />}>
+              Send
+            </Button>
+            <p id="thanksReview" style={{fontSize: "20px", display: "none"}}>Thank you for your review!</p>
           </div>
         </div>
         <Footer />
