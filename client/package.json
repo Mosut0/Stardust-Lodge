@@ -6,6 +6,8 @@
     "@coreui/react": "^4.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@formiz/core": "^1.8.1",
+    "@formiz/validations": "^1.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -29,6 +31,8 @@
     "react-multistep": "^5.5.8",
     "react-router-dom": "^6.14.0",
     "react-scripts": "5.0.1",
+    "react-step-progress-bar": "^1.0.3",
+    "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.11",
     "web-vitals": "^2.1.4"
@@ -59,6 +63,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "gh-pages": "^5.0.0",
+    "tailwindcss": "^3.3.3"
   }
 }

@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import hotelsRoute from "./routes/hotels.js"
+import authRoute from "./routes/auth.js";
+import usersRoute from "./routes/users.js";
 import cors from "cors"
 
 const app = express()
@@ -23,6 +25,8 @@ mongoose.connection.on("disconnected", ()=>{
 app.use(cors({exposedHeaders: 'Authorization'}))
 app.use(express.json())
 
+app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 
 app.use((err, req, res, next)=>{

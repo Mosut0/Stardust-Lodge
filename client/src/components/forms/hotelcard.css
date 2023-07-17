@@ -25,20 +25,3 @@
       margin-top: 20px;
     }
   }
-
-.ui-container {
-    display: none;
-    text-align: center;
-}
-
-.ui-container img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.ui-container p {
-    font-size: 18px;
-    margin-top: 10px;
-}

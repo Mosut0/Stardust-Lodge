@@ -11,21 +11,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useContext } from "react";
 import { useForm } from "react-cool-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../fetch/useFetch";
 import { SearchContext } from "../../context/SearchContext";
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import { AuthContext } from "../../context/AuthContext";
 
 const Hotel = () => {
   const location = useLocation()
   const hotel_id = location.pathname.split('/')[2]
+  const { user } = useContext(AuthContext);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const { data, loading, error, reFetch } = useFetch(`https://seg125-f269f11245e5.herokuapp.com/api/hotels/find/${hotel_id}`);
+  const { data, loading, error, reFetch } = useFetch(`http://localhost:5000/api/hotels/find/${hotel_id}`);
   const {dates, options} = useContext(SearchContext)
+  console.log(options)
   const [ratingValue, setRatingValue] = useState(0);
+  const navigate = useNavigate();
 
   function numberOfNights(date1, date2) {
     const msPerDay = 1000 * 60 *60 *24;
@@ -107,6 +111,16 @@ const Hotel = () => {
     }
   }
 
+  const checkUserValid = () => {
+    if(user){
+      const dataState = {date: dates, hotel: data, options: options}
+      console.log(dataState)
+      navigate("/checkout", {state: dataState})
+    }else{
+      navigate("/login", {state: `/hotels/${hotel_id}`})
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -134,7 +148,7 @@ const Hotel = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button className="bookNow">Reserve or Book Now!</button>
+          <button className="bookNow" onClick={checkUserValid}>Reserve or Book Now!</button>
           <h1 className="hotelTitle">{data.name}</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
@@ -164,7 +178,7 @@ const Hotel = () => {
               <h2>
                 <b>{data.cheapestPrice * nights}$</b> {nights} night(s)
               </h2>
-              <button>Reserve or Book Now!</button>
+              <button onClick={checkUserValid}>Reserve or Book Now!</button>
             </div>
           </div>
           <div className="reviewsContainer">

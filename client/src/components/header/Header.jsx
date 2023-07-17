@@ -8,6 +8,7 @@ import 'react-date-range/dist/theme/default.css';
 import {format} from "date-fns"
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = ({type}) => {
     const [selectedOption, setSelectedOption] = useState('Where would you like to go?');
@@ -28,6 +29,7 @@ const Header = ({type}) => {
     });
 
     const navigate = useNavigate()
+    const { user } = useContext(AuthContext);
 
     const handleOption = (name, operation) => {
         setOptions(prev=>{
@@ -44,6 +46,11 @@ const Header = ({type}) => {
 
     const {dispatch} = useContext(SearchContext)
 
+    const handleLogin = () => {
+        dispatch({type:"LOGIN_START"})
+        navigate("/login")
+    };
+
     const handleSearch = () => {
         dispatch({type:"NEW_SEARCH", payload:{destination, dates, options}})
         navigate("/hotels", { state: {destination, dates, options} })
@@ -58,6 +65,13 @@ const Header = ({type}) => {
         setDestination(`${option}`)
         document.getElementById("myDropdown").classList.remove("show");
     };
+
+    const updateOptions = (option, value) => {
+        setOptions(prevOptions => ({
+            ...prevOptions,
+            [option]: parseInt(value),
+        }));
+    };
     
     return (
         <div className="header">
@@ -68,7 +82,7 @@ const Header = ({type}) => {
                 <p className="headerDesc">
                     Search for hotels - find instant savings and discounts at our best locations!
                 </p>
-                <button className="headerBtn">Sign in / Register</button>
+                {!user && <button className="headerBtn" onClick={handleLogin}>Sign in / Register</button>}
                 <div className="headerSearch">
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faBed} className="headerIcon"/>
