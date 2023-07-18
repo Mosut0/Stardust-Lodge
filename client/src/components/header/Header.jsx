@@ -48,7 +48,7 @@ const Header = ({type}) => {
 
     const handleLogin = () => {
         dispatch({type:"LOGIN_START"})
-        navigate("/login")
+        navigate("/login", {state : false})
     };
 
     const handleSearch = () => {

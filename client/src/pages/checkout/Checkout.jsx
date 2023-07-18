@@ -250,9 +250,9 @@ const Checkout = () => {
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <FontAwesomeIcon icon={faPerson} className="headerIcon" style={{fontSize: 20, marginRight: "5px"}}/>
+                        <FontAwesomeIcon icon={faPerson} className="headerIcon" style={{fontSize: 20, marginRight: "5px", marginLeft: "40px"}}/>
                         <span style={{fontSize: 20}}>{`${options.adult} adult(s) · ${options.children} children · ${options.room} room(s)`}</span>
-                        <div className='optionWrapper'>
+                        <div className='optionWrapper' style={{marginLeft: "30px"}}>
                             <div className="optionItem" >
                                 <span className="optionText" style={{fontSize: 20}}>Adult(s)</span>
                                 <div className="optionCounter">
