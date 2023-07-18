@@ -1,26 +1,20 @@
 import express from "express";
-import Hotel from "../models/Hotel.js";
+import User from "../models/User.js";
 import { createError } from "../utils/error.js";
 
 const router = express.Router();
 
 //push
-router.post("/", async (req, res)=>{
-    const newHotels = []
-    req.body.hotels.forEach(element => {
-        newHotels.push(new Hotel(element));
-    });
-    
-    try{
-        var savedHotel;
-        newHotels.forEach(async newHotel => {
-            savedHotel = await newHotel.save()
-        });
-        res.status(200).json(savedHotel);
-    }catch(err){
-        res.status(500).json(err)
+router.post("/", async (req, res) => {
+    const newUser = new User(req.body);
+    console.log(newUser)
+    try {
+      const savedUser = await newUser.save();
+      res.status(200).json(savedUser);
+    } catch (err) {
+      res.status(500).json(err);
     }
-})
+  });
 
 //update
 router.put("/:id", async (req, res)=>{
