@@ -18,8 +18,11 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { AuthContext } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const Hotel = () => {
+  const { t } = useTranslation();
+
   const location = useLocation()
   const hotel_id = location.pathname.split('/')[2]
   const { user } = useContext(AuthContext);
@@ -65,30 +68,25 @@ const Hotel = () => {
   };
 
   const handleSubmitReview = () =>{
-    // Declare the invalid-input class dynamically
     var invalidInputClass = "invalid-input";
     var invalidInputStyle = document.createElement("style");
     invalidInputStyle.innerHTML = "." + invalidInputClass + " { border: 1px solid red;}";
     document.head.appendChild(invalidInputStyle);
 
-    // Get input elements
     var fullNameInput = document.getElementById("fullname");
     var reviewInput = document.getElementById("message");
     var ratingInput = document.getElementById("rating");
 
-    // Remove previous invalid input highlighting
     fullNameInput.classList.remove(invalidInputClass);
     reviewInput.classList.remove(invalidInputClass);
     ratingInput.classList.remove(invalidInputClass);
 
-    // Get input values
     var fullName = fullNameInput.value.trim();
     var review = reviewInput.value.trim();
     console.log(ratingValue)
 
     var missing = false;
 
-    // Check if inputs are empty
     if (fullName === "") {
         fullNameInput.classList.add(invalidInputClass);
         missing = true;
@@ -148,7 +146,7 @@ const Hotel = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button className="bookNow" onClick={checkUserValid}>Reserve or Book Now!</button>
+          <button className="bookNow" onClick={checkUserValid}>{t("hotel.reserve")}</button>
           <h1 className="hotelTitle">{data.name}</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
@@ -168,21 +166,21 @@ const Hotel = () => {
           </div>
           <div className="hotelDetails">
             <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Hotel Description</h1>
+              <h1 className="hotelTitle">{t("hotel.desc")}</h1>
               <p className="hotelDesc">
                 {data.desc}
               </p>
             </div>
             <div className="hotelDetailsPrice">
-              <h1>Perfect for a {nights}-night stay!</h1>
+              <h1>{t('hotel.yourTranslationKey', { nights })}</h1>
               <h2>
-                <b>{data.cheapestPrice * nights}$</b> {nights} night(s)
+                <b>{data.cheapestPrice * nights}$</b> {t('hotel.yourTranslationKey', { nights })}
               </h2>
-              <button onClick={checkUserValid}>Reserve or Book Now!</button>
+              <button onClick={checkUserValid}>{t('hotel.reserve')}</button>
             </div>
           </div>
           <div className="reviewsContainer">
-            <h1>Reviews</h1>
+            <h1>{t('hotel.review')}</h1>
             <div className="reviewCards">
               {data.reviews?.map((review, index) => (
                 <div className="reviewCard" key={index}>
@@ -200,27 +198,27 @@ const Hotel = () => {
             </div>
           </div>
           <div className="userReview">
-            <h2>Write a Review</h2>
+            <h2>{t('hotel.write')}</h2>
             <form>
               <div className="form-group">
-                <label className="formFN" htmlFor="fullname">Full Name *
+                <label className="formFN" htmlFor="fullname">{t('hotel.fname')} *
                 <input type="text" className="form-control" id="fullname" placeholder="Enter full name" required=""/>
                 </label>
               </div>
               <div className="form-group">
-                <label className="formFN" htmlFor="message">Your Review *
+                <label className="formFN" htmlFor="message">{t('hotel.yourreview')} *
                 <textarea type="text" className="form-control" rows="4" id="message" placeholder="Enter review" required=""/>
                 </label>
               </div>
-              <label id="ratingTitle" className="formFN" htmlFor="rating">Your Rating *</label>
+              <label id="ratingTitle" className="formFN" htmlFor="rating">{t('hotel.yourrating')} *</label>
               <div>
               <Rating onChange={(event, value) => setRatingValue(value)} id="rating" name="size-large" defaultValue={0} size="large" style={{marginTop: "5px"}}/>
               </div>
             </form>
             <Button id="submitBtn" onClick={() => handleSubmitReview()} style={{marginTop: "10px"}} variant="contained" endIcon={<SendIcon />}>
-              Send
+            {t('hotel.send')}
             </Button>
-            <p id="thanksReview" style={{fontSize: "20px", display: "none"}}>Thank you for your review!</p>
+            <p id="thanksReview" style={{fontSize: "20px", display: "none"}}>{t('hotel.thanks')}</p>
           </div>
         </div>
         <Footer />

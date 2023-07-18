@@ -12,8 +12,11 @@ import Footer from "../../components/footer/Footer"
 import { SearchContext } from "../../context/SearchContext";
 import { faCaretDown, faCaretUp, faPerson } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
 
 const List = () => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
   const [dates, setDates] = useState(location.state.dates);
@@ -69,12 +72,12 @@ const List = () => {
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
-            <h1 className="lsTitle">Search</h1>
+            <h1 className="lsTitle">{t("list.search")}</h1>
             <div className="lsItem">
-              <label>Destination</label>
+              <label>{t("list.destination")}</label>
               <div className="dropdown2">
                 <div className="dropdown-btn2" onClick={e => setIsActive(!isActive)}>
-                    {destination === "" ? "All" : destination}
+                    {destination === "" ? t("list.all") : destination}
                     {isActive ? <FontAwesomeIcon icon={faCaretUp}/> : <FontAwesomeIcon icon={faCaretDown}/>}
                 </div>
                 {isActive && (
@@ -98,11 +101,11 @@ const List = () => {
               </div>
             </div>
             <div className="lsItem">
-              <label>Check-in Date</label>
+              <label>{t("list.checkin")}</label>
               <span onClick={() => setOpenDate(!openDate)}>{`${format(
                 dates[0].startDate,
                 "MM/dd/yyyy"
-              )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
+              )} ${t("header.to")} ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
@@ -116,11 +119,11 @@ const List = () => {
               <div className="lsOptions">
                 <div class="price-text">
                   <div>
-                    Min price <small><br/>per night</small>
+                    {t("list.minprice")} <small><br/>{t("list.pernight")}</small>
                   </div>
                   <div class="separator"/>
                   <div>
-                    Max price <small><br/>per night</small>
+                    {t("list.maxprice")} <small><br/>{t("list.pernight")}</small>
                   </div>
                 </div>
                 <div class="price-input">
@@ -138,7 +141,7 @@ const List = () => {
                 <div className="headerSearchItem">
                     {openOptions && <div className="options2">
                         <div className="optionItem2">
-                            <span className="optionText2">Adult(s)</span>
+                            <span className="optionText2">{t("list.adult")}</span>
                             <div className="optionCounter2">
                                 <button disabled={options.adult <= 1} className="optionCounterButton2" onClick={()=>handleOption("adult", "d")}>-</button>
                                 <span className="optionCounterNumber2">{options.adult}</span>
@@ -146,7 +149,7 @@ const List = () => {
                             </div>
                         </div>
                         <div className="optionItem2">
-                            <span className="optionText2">Children</span>
+                            <span className="optionText2">{t("list.children")}</span>
                             <div className="optionCounter2">
                                 <button disabled={options.children <= 0} className="optionCounterButton2" onClick={()=>handleOption("children", "d")}>-</button>
                                 <span className="optionCounterNumber2">{options.children}</span>
@@ -154,7 +157,7 @@ const List = () => {
                             </div>
                         </div>
                         <div className="optionItem2">
-                            <span className="optionText2">Room(s)</span>
+                            <span className="optionText2">{t("list.room")}</span>
                             <div className="optionCounter2">
                                 <button disabled={options.room <= 1} className="optionCounterButton2" onClick={()=>handleOption("room", "d")}>-</button>
                                 <span className="optionCounterNumber2">{options.room}</span>
@@ -165,7 +168,7 @@ const List = () => {
                   </div>
               </div>
             </div>
-            <button onClick={() => handleClick()}>Search</button>
+            <button onClick={() => handleClick()}>{t("list.search")}</button>
           </div>
           <div className="listResult">
             {loading ? "Loading..." : <>

@@ -2,16 +2,19 @@ import { faBed, faCalendarDays, faPerson, faCaretDown } from "@fortawesome/free-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { DateRange } from "react-date-range";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import {format} from "date-fns"
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const Header = ({type}) => {
-    const [selectedOption, setSelectedOption] = useState('Where would you like to go?');
+    const { t } = useTranslation();
+
+    const [selectedOption, setSelectedOption] = useState(t("header.where"));
     const [destination, setDestination] = useState("")
     const [openDate, setOpenDate] = useState(false)
     const [dates, setDates] = useState([
@@ -21,6 +24,7 @@ const Header = ({type}) => {
         key: 'selection'
      }
     ]);
+
     const [openOptions, setOpenOptions] = useState(false)
     const [options, setOptions] = useState({
         adult: 1,
@@ -78,32 +82,32 @@ const Header = ({type}) => {
             <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
             {type !== "list" && (
                 <>
-                <h1 className="headerTitle">Looking for somewhere to stay?</h1>
+                <h1 className="headerTitle">{t("header.title")}</h1>
                 <p className="headerDesc">
-                    Search for hotels - find instant savings and discounts at our best locations!
+                {t("header.desc")}
                 </p>
-                {!user && <button className="headerBtn" onClick={handleLogin}>Sign in / Register</button>}
+                {!user && <button className="headerBtn" onClick={handleLogin}>{t("header.login")}</button>}
                 <div className="headerSearch">
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faBed} className="headerIcon"/>
                         <div className="dropdown">
                             <span className="dropbtn" onClick={myFunction}>
-                                {selectedOption}
+                                {destination === "" ? t("header.where") : destination}
                                 <FontAwesomeIcon icon={faCaretDown} style={{ paddingLeft: '10px' }} />
                             </span>
                             <div className="dropdown-content" id="myDropdown">
-                                <a href="#" onClick={() => handleOptionClick('All')}>All</a>
+                                <a href="#" onClick={() => handleOptionClick('All')}>{t("header.all")}</a>
                                 <a href="#" onClick={() => handleOptionClick('Toronto, Canada')}>Toronto, Canada</a>
-                                <a href="#" onClick={() => handleOptionClick('London, England')}>London, England</a>
+                                <a href="#" onClick={() => handleOptionClick('London, England')}>{t("header.london")}</a>
                                 <a href="#" onClick={() => handleOptionClick('Paris, France')}>Paris, France</a>
-                                <a href="#" onClick={() => handleOptionClick('Dublin, Ireland')}>Dublin, Ireland</a>
+                                <a href="#" onClick={() => handleOptionClick('Dublin, Ireland')}>{t("header.dublin")}</a>
                             </div>
                         </div>
                     </div>
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faCalendarDays} className="headerIcon"/>
                         <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`
-                            ${format(dates[0].startDate, "MM/dd/yyyy")} to 
+                            ${format(dates[0].startDate, "MM/dd/yyyy")} ${t("header.to")} 
                             ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
                         {openDate && <DateRange
                             editableDateInputs={true}
@@ -115,10 +119,10 @@ const Header = ({type}) => {
                     </div>
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faPerson} className="headerIcon"/>
-                        <span onClick={()=>setOpenOptions(!openOptions)} className="headerSearchText">{`${options.adult} adult(s) · ${options.children} children · ${options.room} room(s)`}</span>
+                        <span onClick={()=>setOpenOptions(!openOptions)} className="headerSearchText">{`${options.adult} ${t("header.adult")} · ${options.children} ${t("header.children")} · ${options.room} ${t("header.room")}`}</span>
                         {openOptions && <div className="options">
                             <div className="optionItem">
-                                <span className="optionText">Adult(s)</span>
+                                <span className="optionText">{t("header.adult2")}</span>
                                 <div className="optionCounter">
                                     <button disabled={options.adult <= 1} className="optionCounterButton" onClick={()=>handleOption("adult", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.adult}</span>
@@ -126,7 +130,7 @@ const Header = ({type}) => {
                                 </div>
                             </div>
                             <div className="optionItem">
-                                <span className="optionText">Children</span>
+                                <span className="optionText">{t("header.children2")}</span>
                                 <div className="optionCounter">
                                     <button disabled={options.children <= 0} className="optionCounterButton" onClick={()=>handleOption("children", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.children}</span>
@@ -134,7 +138,7 @@ const Header = ({type}) => {
                                 </div>
                             </div>
                             <div className="optionItem">
-                                <span className="optionText">Room(s)</span>
+                                <span className="optionText">{t("header.room2")}</span>
                                 <div className="optionCounter">
                                     <button disabled={options.room <= 1} className="optionCounterButton" onClick={()=>handleOption("room", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.room}</span>
@@ -144,7 +148,7 @@ const Header = ({type}) => {
                         </div>}
                     </div>
                     <div className="headerSearchItem">
-                        <button className="headerBtn" onClick={handleSearch}>Search</button>
+                        <button className="headerBtn" onClick={handleSearch}>{t("header.search")}</button>
                     </div>
                 </div>
                 </>

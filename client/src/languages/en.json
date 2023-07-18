@@ -1,0 +1,129 @@
+    {
+        "navbar":{
+            "profile": "Profile",
+            "logout": "Logout",
+            "login": "Login",
+            "register": "Register",
+            "english": "English"
+        },
+        "header":{
+            "title": "Looking for somehwere to stay?",
+            "where": "Where would you like to go?",
+            "desc": "Search for hotels - find instant savings and discounts at our best locations!",
+            "login": "Sign in / Register",
+            "all": "All",
+            "london": "London, England",
+            "dublin": "Dublin, Ireland",
+            "to": "to",
+            "adult": "adult(s)",
+            "children": "children",
+            "room": "room(s)",
+            "adult2": "Adult(s)",
+            "children2": "Children",
+            "room2": "Room(s)",
+            "search": "Search"
+        },
+        "featured":{
+            "london": "London",
+            "properties": "3 properties"
+        },
+        "home":{
+            "featured": "Featured Cities"
+        },
+        "footer":{
+            "enjoy": "Enjoy Your Stay!"
+        },
+        "searchitem":{
+            "rooms": "rooms available",
+            "tax": "Includes taxes and fees",
+            "availability": "See availablility"
+        },
+        "checkout":{
+            "thanks": "Thank you for booking an appointment at Stardust Lodge!",
+            "sent": "A confirmation of your appointment has been sent to your email.",
+            "call": "To cancel, call us at (123) 456-7890.",
+            "profile": "Go to Your Profile",
+            "booking": "Booking Information",
+            "first": "First Name*",
+            "last": "Last Name*",
+            "email": "Email*",
+            "phone": "Phone Number*",
+            "drg": "Date, Rooms & Guests",
+            "adult2": "Adult(s)",
+            "children2": "Children",
+            "room2": "Room(s)",
+            "payment": "Payment Details",
+            "holder": "Cardholder's Name*",
+            "card": "Card Number*",
+            "exp": "Expiration Date (MMYY)*",
+            "personal": "Personal Information",
+            "confirmation": "Confirmation",
+            "reservation": "Your Reservation",
+            "numrooms": "# of Rooms",
+            "numguests": "# of Guests",
+            "checkin": "Check-In Date",
+            "checkout": "Check-Out Date",
+            "ppn": "Price per night",
+            "back": "Back",
+            "next": "Next",
+            "finish": "Finish"
+        },
+        "profile":{
+            "profile": "Profile",
+            "booking": "Booking Calendar",
+            "submit": "Submit Event Date",
+            "submitevent": "Submit Event",
+            "eventname": "Event Name",
+            "eventdate": "Event Date",
+            "eventtime": "Event Time"
+        },
+        "login":{
+            "login": "Login",
+            "register": "Register",
+            "first": "First Name",
+            "last": "Last Name",
+            "email": "Email",
+            "username": "Username",
+            "password": "Password",
+            "fnamereq": "First name is required",
+            "lnamereq": "Last name is required",
+            "emailreq": "Email is required",
+            "userreq": "Username is required",
+            "passreq": "Password is required",
+            "success": "Registration successful! Login now."
+        },
+        "hotel":{
+            "desc": "Hotel Description",
+            "reserve": "Reserve or Book Now!",
+            "review": "Reviews",
+            "write": "Write a Review",
+            "yourreview": "Your Review",
+            "fname": "Full Name",
+            "lname": "Last Name",
+            "yourrating": "Your Rating",
+            "thanks": "Thank you for your review!",
+            "send": "Send",
+            "night": "night(s)",
+            "yourTranslationKey": "Perfect for a {{nights}}-night stay!" 
+        },
+        "list":{
+            "search": "Search",
+            "destination": "Destination",
+            "all": "All",
+            "checkin": "Check-In Date",
+            "checkout": "Check-Out Date",
+            "minprice": "Min price",
+            "maxprice": "Max price",
+            "pernight": "per night",
+            "adult": "Adult(s)",
+            "children": "Children",
+            "room": "Room(s)"
+        },
+        "404":{
+            "home": "Go to Home",
+            "e11": "404 - Page Not Found", 
+            "e12": "Oops! This page doesn't exist.",
+            "e21": "Uh oh! You're not logged in.",
+            "e22": "Sign in or create an account to access your profile."
+        }
+    }

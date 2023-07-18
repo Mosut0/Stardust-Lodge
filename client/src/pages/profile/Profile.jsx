@@ -3,17 +3,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import { Box, Typography, TextField, Button, Container } from '@mui/material';
 import { AuthContext } from '../../context/AuthContext';
-import BookingCalendar from '../../components/calendar/BookingCalendar';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { useTranslation } from 'react-i18next';
 
 const localizer = momentLocalizer(moment);
 
 const Profile = () => {
+  const { t } = useTranslation();
+
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +41,6 @@ const Profile = () => {
 
   const handleSubmitEvent = (e) => {
     e.preventDefault();
-    // Add the new event data to the booked events
     setBookedEvents((prevEvents) => [
       ...prevEvents,
       {
@@ -50,7 +51,6 @@ const Profile = () => {
       },
     ]);
 
-    // Clear the form fields after submission
     setEventName('');
     setEventDate('');
     setEventTime('');
@@ -64,11 +64,11 @@ const Profile = () => {
           {/* Booking Calendar */}
             <Box p={4} flexGrow={1} sx={{ marginLeft: '20px' }}>
             <Typography variant="h4" gutterBottom>
-                Profile
+                {t("profile.profile")}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
                 <FontAwesomeIcon icon={faCalendarDays} style={{ marginRight: '8px', fontSize: '24px' }} />
-                <Typography variant="h6">Booking Calendar</Typography>
+                <Typography variant="h6">{t("profile.booking")}</Typography>
             </Box>
             <Box width="100%" sx={{ minHeight: 0, overflow: 'hidden' }}>
                 <Calendar
@@ -80,17 +80,16 @@ const Profile = () => {
                 />
             </Box>
             </Box>
-          {/* Event Submission Form */}
           <Box
             component="form"
             onSubmit={handleSubmitEvent}
             sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}
           >
             <Typography variant="h6" gutterBottom>
-              Submit Event Date
+            {t("profile.submit")}
             </Typography>
             <TextField
-              label="Event Name"
+              label={t("profile.eventname")}
               variant="outlined"
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
@@ -103,7 +102,7 @@ const Profile = () => {
               }}
             />
             <TextField
-              label="Event Date"
+              label={t("profile.eventdate")}
               variant="outlined"
               type="date"
               value={eventDate}
@@ -117,7 +116,7 @@ const Profile = () => {
               }}
             />
             <TextField
-              label="Event Time"
+              label={t("profile.eventtime")}
               variant="outlined"
               type="time"
               value={eventTime}
@@ -129,7 +128,7 @@ const Profile = () => {
               }}
             />
             <Button type="submit" variant="contained">
-              Submit Event
+              {t("profile.submitevent")}
             </Button>
           </Box>
         </Box>

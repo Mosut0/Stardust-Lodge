@@ -9,20 +9,20 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
-import BookingInformation from '../../components/forms/BookingInformation';
-import PaymentInformation from '../../components/forms/PaymentInformation';
 import { useNavigate, useLocation } from "react-router-dom";
 import { faBed, faCalendarDays, faPerson, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateRange } from "react-date-range";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import HotelCard from '../../components/forms/HotelCard';
 import {format} from "date-fns"
 import parseWithOptions from 'date-fns/esm/fp/parseWithOptions';
 import "./checkout.css"
+import { useTranslation } from 'react-i18next';
 
 const Checkout = () => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const navigate = useNavigate()
 
@@ -181,25 +181,25 @@ const Checkout = () => {
           {activeStep === Object.keys(steps).length ? (
             <React.Fragment>
               <Typography sx={{ mt: 2, mb: 1, textAlign: "center" }}>
-                Thank you for booking an appointment at Stardust Lodge!<br></br>
+                {t("checkout.thanks")}<br></br>
                 <br></br>
-                A confirmation of your appointment has been sent to your email.<br></br>
-                To cancel, call us at (123) 456-7890.
+                {t("checkout.sent")}<br></br>
+                {t("checkout.call")}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, textAlign: "center", margin : "auto" }}>
                 <Box sx={{ flex: '1 1 auto', textAlign: "center", margin : "auto" }} />
-                <Button onClick={handleProfile}>Go to Your Profile</Button>
+                <Button onClick={handleProfile}>{t("checkout.profile")}</Button>
               </Box>
             </React.Fragment>
           ) : (
             <React.Fragment>
               <div id="part1" style={{ display: isHidden1 ? 'none' : 'block' }}>
-                <h2 style={{fontSize: 30}}>Booking Information</h2>
+                <h2 style={{fontSize: 30}}>{t("checkout.booking")}</h2>
                 <Box sx={{ maxWidth: '60%', marginTop: '30px' }}>
                   <Grid container spacing={2} justifyContent="flex-start" sx={{ flexDirection: { md: 'column', lg: 'row' } }}>
                     <Grid item xs={6}>
                       <TextField
-                        label="First Name*"
+                        label={t("checkout.first")}
                         variant="outlined"
                         fullWidth
                         value={firstName}
@@ -208,7 +208,7 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        label="Last Name*"
+                        label={t("checkout.last")}
                         variant="outlined"
                         fullWidth
                         value={lastName}
@@ -217,7 +217,7 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        label="Email*"
+                        label={t("checkout.email")}
                         variant="outlined"
                         type="email"
                         fullWidth
@@ -227,7 +227,7 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        label="Phone Number*"
+                        label={t("checkout.phone")}
                         variant="outlined"
                         type="tel"
                         fullWidth
@@ -238,13 +238,13 @@ const Checkout = () => {
                   </Grid>
                 </Box>
 
-                <h2 style={{fontSize: 30}}>Date, Rooms & Guests</h2>
+                <h2 style={{fontSize: 30}}>{t("checkout.drg")}</h2>
                 <Box sx={{ maxWidth: '100%', marginTop: '-20px' }}>
                   <Grid container spacing={2} justifyContent="flex-start" sx={{ flexDirection: { md: 'column', lg: 'row' } }}>
                     <Grid item xs={6}>
                         <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" style={{fontSize: 20}}/>
                         <span style={{fontSize: 20}}>{`
-                            ${format(dates[0].startDate, "MM/dd/yyyy")} to 
+                            ${format(dates[0].startDate, "MM/dd/yyyy")} ${t("header.to")}
                             ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
                         <DateRange
                             editableDateInputs={true}
@@ -256,10 +256,10 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={6}>
                         <FontAwesomeIcon icon={faPerson} className="headerIcon" style={{fontSize: 20, marginRight: "5px", marginLeft: "40px"}}/>
-                        <span style={{fontSize: 20}}>{`${options.adult} adult(s) · ${options.children} children · ${options.room} room(s)`}</span>
+                        <span style={{fontSize: 20}}>{`${options.adult} ${t("header.adult")} · ${options.children} ${t("header.children")} · ${options.room} ${t("header.room")}`}</span>
                         <div className='optionWrapper' style={{marginLeft: "30px"}}>
                             <div className="optionItem" >
-                                <span className="optionText" style={{fontSize: 20}}>Adult(s)</span>
+                                <span className="optionText" style={{fontSize: 20}}>{t("checkout.adult2")}</span>
                                 <div className="optionCounter">
                                     <button disabled={options.adult <= 1} className="optionCounterButton" onClick={()=>handleOption("adult", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.adult}</span>
@@ -267,7 +267,7 @@ const Checkout = () => {
                                 </div>
                             </div>
                             <div className="optionItem" >
-                                <span className="optionText" style={{fontSize: 20}}>Children</span>
+                                <span className="optionText" style={{fontSize: 20}}>{t("checkout.children2")}</span>
                                 <div className="optionCounter">
                                     <button disabled={options.children <= 0} className="optionCounterButton" onClick={()=>handleOption("children", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.children}</span>
@@ -275,7 +275,7 @@ const Checkout = () => {
                                 </div>
                             </div>
                             <div className="optionItem" >
-                                <span className="optionText" style={{fontSize: 20}}>Room(s)</span>
+                                <span className="optionText" style={{fontSize: 20}}>{t("checkout.room2")}</span>
                                 <div className="optionCounter">
                                     <button disabled={options.room <= 1} className="optionCounterButton" onClick={()=>handleOption("room", "d")}>-</button>
                                     <span className="optionCounterNumber">{options.room}</span>
@@ -288,12 +288,12 @@ const Checkout = () => {
                 </Box>
               </div>
               <div id="part2" style={{ display: isHidden2 ? 'none' : 'block' }}>
-                <h2 style={{fontSize: 30}}>Payment Details</h2>
+                <h2 style={{fontSize: 30}}>{t("checkout.payment")}</h2>
                 <Box sx={{ maxWidth: '60%', marginTop: '30px' }}>
                   <Grid container spacing={2} justifyContent="flex-start" sx={{ flexDirection: { md: 'column', lg: 'row' } }}>
                     <Grid item xs={12}>
                       <TextField
-                        label="Cardholder's Name"
+                        label={t("checkout.holder")}
                         variant="outlined"
                         fullWidth
                         value={cardholderName}
@@ -302,7 +302,7 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        label="Card Number"
+                        label={t("checkout.card")}
                         variant="outlined"
                         fullWidth
                         value={cardNumber}
@@ -311,8 +311,9 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        label="Expiration Date"
+                        label={t("checkout.exp")}
                         variant="outlined"
+                        placeholder='MMYY'
                         fullWidth
                         value={expirationDate}
                         onChange={(e) => setExpirationDate(e.target.value)}
@@ -320,7 +321,7 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        label="CVV"
+                        label="CVV*"
                         variant="outlined"
                         fullWidth
                         value={cvv}
@@ -331,36 +332,36 @@ const Checkout = () => {
                 </Box>
               </div>
               <div id="part3" style={{ display: isHidden3 ? 'none' : 'block' }}>
-                <h2 style={{fontSize: 30}}>Confirmation</h2>
+                <h2 style={{fontSize: 30}}>{t("checkout.confirmation")}</h2>
                 <div style={{textAlign: "center"}}>
-                  <h3 style={{fontSize: 25}}>Personal Information</h3>
-                  <h4>Full Name: {firstName} {lastName}</h4>
-                  <h4>Email: {email}</h4>
-                  <h4>Phone Number: {phoneNumber}</h4>
+                  <h3 style={{fontSize: 25}}>{t("checkout.personal")}</h3>
+                  <h4>{t("login.first")}: {firstName} {lastName}</h4>
+                  <h4>{t("login.email")}: {email}</h4>
+                  <h4>{t("checkout.phone").slice(0, -1)}: {phoneNumber}</h4>
               </div>
                 <div className="order-card" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
                   <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
-                      <h2 style={{ fontWeight: "bold", whiteSpace: "nowrap", marginRight: "1rem" }}>Your Reservation</h2>
+                      <h2 style={{ fontWeight: "bold", whiteSpace: "nowrap", marginRight: "1rem" }}>{t("checkout.reservation")}</h2>
                   </div>
                   <hr style={{width: "100%"}}/>
                   <div className="order-items" style={{ whiteSpace: "nowrap" }}>
                       <img src={dataState.hotel.photos[0]} alt="Reservation" style={{ width: "100%", maxWidth: "400px", marginBottom: "1rem" }} />
                       <h3>{dataState.hotel.name}</h3>
                       <div className="order-item" style={{fontWeight: "bold"}}>{dataState.hotel.address}</div>
-                      <div className="order-item"><b># of Rooms:</b> {options.room}</div>
-                      <div className="order-item"><b># of Guests:</b> {options.children + options.adult}</div>
-                      <div className="order-item"><b>Check-In Date:</b> {format(
+                      <div className="order-item"><b>{t("checkout.numrooms")}:</b> {options.room}</div>
+                      <div className="order-item"><b>{t("checkout.numguests")}:</b> {options.children + options.adult}</div>
+                      <div className="order-item"><b>{t("checkout.checkin")}:</b> {format(
                           dates[0].startDate,
                           "MM/dd/yyyy"
                       )}
                       </div>
-                      <div className="order-item"><b>Check-Out Date:</b> {format(
+                      <div className="order-item"><b>{t("checkout.checkout")}:</b> {format(
                           dates[0].endDate, 
                           "MM/dd/yyyy"
                       )}
                       </div>
                       <hr style={{width: "100%"}}/>
-                      <div className='order-item' style={{fontSize: "20px"}}><b>Price per night: </b>${dataState.hotel.cheapestPrice}</div>
+                      <div className='order-item' style={{fontSize: "20px"}}><b>{t("checkout.ppn")}: </b>${dataState.hotel.cheapestPrice}</div>
                       <div className='order-item' style={{fontSize: "20px", marginBottom: 0}}><b>Total: </b>${nights * dataState.hotel.cheapestPrice}</div>
                   </div>
                   <h4 id="total" style={{ fontWeight: "bold", marginTop: "2rem", whiteSpace: "nowrap" }}></h4>
@@ -373,7 +374,7 @@ const Checkout = () => {
                   onClick={handleBack}
                   sx={{ mr: 1 }}
                 >
-                  Back
+                  {t("checkout.back")}
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
 
@@ -394,20 +395,20 @@ const Checkout = () => {
                   <img src={dataState.hotel.photos[0]} alt="Reservation" style={{ width: "100%", maxWidth: "400px", marginBottom: "1rem" }} />
                   <h3>{dataState.hotel.name}</h3>
                   <div className="order-item" style={{fontWeight: "bold"}}>{dataState.hotel.address}</div>
-                  <div className="order-item"><b># of Rooms:</b> {options.room}</div>
-                  <div className="order-item"><b># of Guests:</b> {options.children + options.adult}</div>
-                  <div className="order-item"><b>Check-In Date:</b> {format(
+                  <div className="order-item"><b>{t("checkout.numrooms")}:</b> {options.room}</div>
+                  <div className="order-item"><b>{t("checkout.numguests")}:</b> {options.children + options.adult}</div>
+                  <div className="order-item"><b>{t("checkout.checkin")}:</b> {format(
                       dates[0].startDate,
                       "MM/dd/yyyy"
                   )}
                   </div>
-                  <div className="order-item"><b>Check-Out Date:</b> {format(
+                  <div className="order-item"><b>{t("checkout.checkout")}:</b> {format(
                       dates[0].endDate, 
                       "MM/dd/yyyy"
                   )}
                   </div>
                   <hr style={{width: "100%"}}/>
-                  <div className='order-item' style={{fontSize: "20px"}}><b>Price per night: </b>${dataState.hotel.cheapestPrice}</div>
+                  <div className='order-item' style={{fontSize: "20px"}}><b>{t("checkout.ppn")}: </b>${dataState.hotel.cheapestPrice}</div>
                   <div className='order-item' style={{fontSize: "20px", marginBottom: 0}}><b>Total: </b>${nights * dataState.hotel.cheapestPrice}</div>
               </div>
               <h4 id="total" style={{ fontWeight: "bold", marginTop: "2rem", whiteSpace: "nowrap" }}></h4>

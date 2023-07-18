@@ -1,0 +1,130 @@
+{
+    "navbar": {
+      "profile": "Profil",
+      "logout": "Se déconnecter",
+      "login": "Connexion",
+      "register": "S'inscrire",
+      "english": "Français"
+    },
+    "header": {
+      "title": "Vous cherchez un endroit où séjourner ?",
+      "where": "Où souhaitez-vous aller ?",
+      "desc": "Recherchez des hôtels - trouvez des économies instantanées et des réductions dans nos meilleurs emplacements !",
+      "login": "Connexion / Inscription",
+      "all": "Tous",
+      "london": "Londres, Angleterre",
+      "dublin": "Dublin, Irlande",
+      "to": "à",
+      "adult": "adulte(s)",
+      "children": "enfant(s)",
+      "room": "chambre(s)",
+      "adult2": "Adulte(s)",
+      "children2": "Enfants",
+      "room2": "Chambre(s)",
+      "search": "Rechercher"
+    },
+    "featured": {
+      "london": "Londres",
+      "properties": "3 propriétés"
+    },
+    "home": {
+      "featured": "Villes en vedette"
+    },
+    "footer": {
+      "enjoy": "Profitez de votre séjour !"
+    },
+    "searchitem": {
+      "rooms": "chambres disponibles",
+      "tax": "Taxes et frais inclus",
+      "availability": "Voir la disponibilité"
+    },
+    "checkout": {
+      "thanks": "Merci d'avoir réservé un rendez-vous au Stardust Lodge !",
+      "sent": "Une confirmation de votre rendez-vous a été envoyée à votre adresse e-mail.",
+      "call": "Pour annuler, appelez-nous au (123) 456-7890.",
+      "profile": "Aller à votre profil",
+      "booking": "Informations de Réservation",
+      "first": "Prénom*",
+      "last": "Nom de famille*",
+      "email": "E-mail*",
+      "phone": "Numéro de téléphone*",
+      "drg": "Date, Chambres et Invités",
+      "adult2": "Adulte(s)",
+      "children2": "Enfants",
+      "room2": "Chambre(s)",
+      "payment": "Détails de Paiement*",
+      "holder": "Nom du Titulaire de la Carte*",
+      "card": "Numéro de Carte*",
+      "exp": "Date d'Expiration (MMYY)*",
+      "personal": "Informations Personnelles",
+      "confirmation": "Confirmation",
+      "reservation": "Votre Réservation",
+      "numrooms": "# de Chambres",
+      "numguests": "# d'Invités",
+      "checkin": "Date d'Arrivée",
+      "checkout": "Date de Départ",
+      "ppn": "Prix par nuit",
+      "back": "Retour",
+      "next": "Suivant",
+      "finish": "Finir"
+    },
+    "profile": {
+      "profile": "Profil",
+      "booking": "Calendrier des Réservations",
+      "submit": "Soumettre la Date de l'Événement",
+      "submitevent": "Soumettre un Événement",
+      "eventname": "Nom de l'événement",
+      "eventdate": "Date de l'événement",
+      "eventtime": "Heure de l'événement"
+    },
+    "login": {
+      "login": "Connexion",
+      "register": "S'inscrire",
+      "first": "Prénom",
+      "last": "Nom de famille",
+      "email": "E-mail",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "fnamereq": "Le prénom est requis",
+      "lnamereq": "Le nom de famille est requis",
+      "emailreq": "L'e-mail est requis",
+      "userreq": "Le nom d'utilisateur est requis",
+      "passreq": "Le mot de passe est requis",
+      "success": "Inscription réussie ! Connectez-vous maintenant."
+    },
+    "hotel": {
+      "desc": "Description de l'Hôtel",
+      "reserve": "Réservez maintenant !",
+      "review": "Avis",
+      "write": "Écrire un avis",
+      "yourreview": "Votre Avis",
+      "fname": "Nom complet",
+      "lname": "Nom de famille",
+      "yourrating": "Votre Évaluation",
+      "thanks": "Merci pour votre avis !",
+      "send": "Envoyer",
+      "night": "nuit(s)",
+      "yourTranslationKey": "Parfait pour un séjour de {{nights}} nuit(s) !"
+    },
+    "list": {
+      "search": "Rechercher",
+      "destination": "Destination",
+      "all": "Tous",
+      "checkin": "Date d'Arrivée",
+      "checkout": "Date de Départ",
+      "minprice": "Prix min",
+      "maxprice": "Prix max",
+      "pernight": "par nuit",
+      "adult": "Adulte(s)",
+      "children": "Enfants",
+      "room": "Chambre(s)"
+    },
+    "404": {
+      "home": "Aller à l'Accueil",
+      "e11": "404 - Page Non Trouvée",
+      "e12": "Oups ! Cette page n'existe pas.",
+      "e21": "Oh oh ! Vous n'êtes pas connecté(e).",
+      "e22": "Connectez-vous ou créez un compte pour accéder à votre profil."
+    }
+  }
+  

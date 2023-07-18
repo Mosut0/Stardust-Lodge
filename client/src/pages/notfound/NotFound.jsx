@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
+import { UseTranslation, useTranslation } from 'react-i18next';
 
 const NotFound = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const state = location.state;
 
   const errorMessages = {
-    0: ["404 - Page Not Found", "Oops! This page doesn't exist."],
-    1: ["Uh oh! You're not logged in.", "Sign in or create an account to access your profile."]
+    0: [t("404.e11"), t("404.e12")],
+    1: [t("404.e21"), t("404.e22")]
   };
 
   const errorMessage = state !== undefined && errorMessages[state] ? errorMessages[state] : errorMessages[0];
@@ -20,7 +22,7 @@ const NotFound = () => {
         <br /><br /><br /><br /><br />
         <h1 style={styles.title}>{errorMessage[0]}</h1>
         <p style={styles.message}>{errorMessage[1]}</p>
-        <Link to="/" style={styles.button}>Go to Home</Link>
+        <Link to="/" style={styles.button}>{t("404.home")}</Link>
       </div>
     </>
   );

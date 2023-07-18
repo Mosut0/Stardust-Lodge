@@ -1,11 +1,15 @@
 import "./navbar.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { faBed, faCalendarDays, faPerson, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import i18n from "../../i18n";
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+    const { t } = useTranslation();
+
     const { user } = useContext(AuthContext)
     const location = useLocation();
     const isLoginPage = location.pathname === "/login";
@@ -41,6 +45,10 @@ const Navbar = () => {
         }
     }
 
+    const changeLanguage = (lang) => {
+        i18n.changeLanguage(lang)
+    }
+
     return (
         <div className="navbar">
             <div className="navContainer">
@@ -52,15 +60,19 @@ const Navbar = () => {
                         {user.username}
                         <FontAwesomeIcon icon={faCaretDown} style={{ marginLeft: '10px' }} />
                     </button>
+                    <button className="navButton" onClick={() => changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>{t("navbar.english")}</button>
+
                     <div className="dropdown-content3" id="myDropdown3">
-                        <a href="#" onClick={() => handleOptionClick('profile')}>Profile</a>
-                        <a href="#" onClick={() => handleOptionClick('logout')}>Logout</a>
+                        <a href="#" onClick={() => handleOptionClick('profile')}>{t("navbar.profile")}</a>
+                        <a href="#" onClick={() => handleOptionClick('logout')}>{t("navbar.logout")}</a>
                     </div>
                     </div>
                 ) : isLoginPage ? null : (
                     <div className="navItems">
-                    <button className="navButton" onClick={() => handleOptionClick('register')}>Register</button>
-                    <button className="navButton" onClick={() => handleOptionClick('login')}>Login</button>
+                    <button className="navButton" onClick={() => handleOptionClick('register')}>{t("navbar.login")}</button>
+                    <button className="navButton" onClick={() => handleOptionClick('login')}>{t("navbar.register")}</button>
+                    <button className="navButton" onClick={() => changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>{t("navbar.english")}</button>
+
                     </div>
                 )}
                 </div>

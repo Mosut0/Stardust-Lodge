@@ -7,8 +7,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const data = location.state;
 
@@ -155,14 +158,14 @@ const Login = () => {
         >
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              {isLogin ? <h2>Login</h2> : <h2>Register</h2>}
+              {isLogin ? <h2>{t("login.login")}</h2> : <h2>{t("login.register")}</h2>}
             </Grid>
             {!isLogin && (
               <>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="First Name"
+                    label={t("login.first")}
                     variant="outlined"
                     id="firstName"
                     onChange={handleChange}
@@ -172,13 +175,13 @@ const Login = () => {
                       ),
                     }}
                     error={fieldError.firstName}
-                    helperText={fieldError.firstName && "First name is required"}
+                    helperText={fieldError.firstName && t("login.fnamereq")}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Last Name"
+                    label={t("login.last")}
                     variant="outlined"
                     id="lastName"
                   onChange={handleChange}
@@ -188,13 +191,13 @@ const Login = () => {
                       ),
                     }}
                     error={fieldError.lastName}
-                    helperText={fieldError.lastName && "Last name is required"}
+                    helperText={fieldError.lastName && t("login.lnamereq")}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Email"
+                    label={t("login.email")}
                     variant="outlined"
                     id="email"
                     onChange={handleChange}
@@ -204,7 +207,7 @@ const Login = () => {
                       ),
                     }}
                     error={fieldError.email}
-                    helperText={fieldError.email && "Email is required"}
+                    helperText={fieldError.email && t("login.emailreq")}
                   />
                 </Grid>
               </>
@@ -212,7 +215,7 @@ const Login = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Username"
+                label={t("login.username")}
                 variant="outlined"
                 id="username"
                 onChange={handleChange}
@@ -222,13 +225,13 @@ const Login = () => {
                   ),
                 }}
                 error={fieldError.username}
-                helperText={fieldError.username && "Username is required"}
+                helperText={fieldError.username && t("login.userreq")}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Password"
+                label={t("login.password")}
                 type="password"
                 variant="outlined"
                 id="password"
@@ -239,30 +242,30 @@ const Login = () => {
                   ),
                 }}
                 error={fieldError.password}
-                helperText={fieldError.password && "Password is required"}
+                helperText={fieldError.password && t("login.passreq")}
               />
             </Grid>
             <Grid item xs={12}>
               {isLogin ? (
                 <Button fullWidth variant="contained" onClick={handleLogin}>
-                  Login
+                  {t("login.login")}
                 </Button>
               ) : (
                 <Button fullWidth variant="contained" onClick={handleRegister}>
-                  Sign Up
+                  {t("login.register")}
                 </Button>
               )}
-              {registrationSuccess && <span style={{ color: "green" }}>Registration successful! Login now.</span>}
+              {registrationSuccess && <span style={{ color: "green" }}>{t("login.success")}</span>}
               {(isError && error) && <span style={{ color: "red" }}>{error.message}</span>}
             </Grid>
             <Grid item xs={12}>
               {isLogin ? (
                 <Button fullWidth onClick={toggleForm}>
-                  Register
+                  {t("login.register")}
                 </Button>
               ) : (
                 <Button fullWidth onClick={toggleForm}>
-                  Login
+                  {t("login.login")}
                 </Button>
               )}
             </Grid>
