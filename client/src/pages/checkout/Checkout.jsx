@@ -133,7 +133,12 @@ const Checkout = () => {
   };
 
   const handleProfile = () => {
-    navigate("/profile")
+    const event = {
+      eventName: dataState.hotel.name,
+      eventStart: dates[0].startDate,
+      eventEnd: dates[0].endDate
+    }
+    navigate("/profile", {state: event})
   };
 
   const steps = {0:['Booking Information', null], 
@@ -183,7 +188,7 @@ const Checkout = () => {
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, textAlign: "center", margin : "auto" }}>
                 <Box sx={{ flex: '1 1 auto', textAlign: "center", margin : "auto" }} />
-                <Button onClick={handleProfile}>Profile</Button>
+                <Button onClick={handleProfile}>Go to Your Profile</Button>
               </Box>
             </React.Fragment>
           ) : (

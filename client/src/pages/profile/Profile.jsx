@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import { Box, Typography, TextField, Button, Container } from '@mui/material';
 import { AuthContext } from '../../context/AuthContext';
@@ -16,10 +16,20 @@ const localizer = momentLocalizer(moment);
 const Profile = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+
   const [eventName, setEventName] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventTime, setEventTime] = useState('');
-  const [bookedEvents, setBookedEvents] = useState([]);
+  const [bookedEvents, setBookedEvents] = useState(state !== null ? 
+    [{id: 0,
+      title: state.eventName,
+      start: new Date(state.eventStart),
+      end: new Date(state.eventEnd)
+    }] : []);
+
+  console.log(bookedEvents)
 
   useEffect(() => {
     if (!user) {

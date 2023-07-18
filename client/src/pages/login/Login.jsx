@@ -114,6 +114,13 @@ const Login = () => {
     setError(false)
     setRegistrationSuccess(false);
     setIsLogin(!isLogin);
+    setFieldError({
+      username: false,
+      password: false,
+      firstName: false, 
+      lastName: false, 
+      email: false, 
+    })
   };
 
   return (
