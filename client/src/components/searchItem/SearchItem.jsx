@@ -5,13 +5,12 @@ import { useTranslation } from "react-i18next";
 const SearchItem = ({item}) => {
   const { t } = useTranslation();
   console.log(t("searchitem.tax"));
-
   return (
     <div className="searchItem">
       <Link to={`/hotels/${item._id}`}>
         <img
           src={item.photos[0]}
-          alt=""
+          alt={"Room image of " + item.name}
           className="siImg"
         />
       </Link>

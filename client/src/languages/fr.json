@@ -66,7 +66,15 @@
       "ppn": "Prix par nuit",
       "back": "Retour",
       "next": "Suivant",
-      "finish": "Finir"
+      "finish": "Finir",
+      "fnamereq": "Le prénom est requis",
+      "lnamereq": "Le nom de famille est requis",
+      "emailreq": "L'e-mail est requise",
+      "phonereq": "Le numéro de téléphone est requis",
+      "holderreq": "Le nom du titulaire de la carte est requis",
+      "cardreq": "Le numéro de carte est requis",
+      "expreq": "La date d'expiration est requise",
+      "cvvreq": "Le code de sécurité est requis"
     },
     "profile": {
       "profile": "Profil",

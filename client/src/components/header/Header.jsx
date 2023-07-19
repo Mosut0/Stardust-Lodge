@@ -91,24 +91,52 @@ const Header = ({type}) => {
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faBed} className="headerIcon"/>
                         <div className="dropdown">
-                            <span className="dropbtn" onClick={myFunction}>
+                            <span
+                                className="dropbtn"
+                                role="button"
+                                tabIndex="0"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                onClick={myFunction}
+                            >
                                 {destination === "" ? t("header.where") : destination}
                                 <FontAwesomeIcon icon={faCaretDown} style={{ paddingLeft: '10px' }} />
                             </span>
-                            <div className="dropdown-content" id="myDropdown">
-                                <a href="#" onClick={() => handleOptionClick('All')}>{t("header.all")}</a>
-                                <a href="#" onClick={() => handleOptionClick('Toronto, Canada')}>Toronto, Canada</a>
-                                <a href="#" onClick={() => handleOptionClick('London, England')}>{t("header.london")}</a>
-                                <a href="#" onClick={() => handleOptionClick('Paris, France')}>Paris, France</a>
-                                <a href="#" onClick={() => handleOptionClick('Dublin, Ireland')}>{t("header.dublin")}</a>
+                            <div className="dropdown-content" id="myDropdown" role="menu">
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('All')}>
+                                    {t("header.all")}
+                                </a>
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('Toronto, Canada')}>
+                                    Toronto, Canada
+                                </a>
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('London, England')}>
+                                    {t("header.london")}
+                                </a>
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('Paris, France')}>
+                                    Paris, France
+                                </a>
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('Dublin, Ireland')}>
+                                    {t("header.dublin")}
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faCalendarDays} className="headerIcon"/>
-                        <span onClick={()=>setOpenDate(!openDate)} className="headerSearchText">{`
+                        <span
+                            role="button"
+                            tabIndex="0"
+                            onClick={() => setOpenDate(!openDate)}
+                            onKeyPress={(event) => {
+                                if (event.key === 'Enter') setOpenDate(!openDate);
+                            }}
+                            className="headerSearchText"
+                            aria-label={`${format(dates[0].startDate, "MM/dd/yyyy")} ${t("header.to")} ${format(dates[0].endDate, "MM/dd/yyyy")}`}
+                        >
+                            {`
                             ${format(dates[0].startDate, "MM/dd/yyyy")} ${t("header.to")} 
-                            ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
+                            ${format(dates[0].endDate, "MM/dd/yyyy")}`}
+                        </span>
                         {openDate && <DateRange
                             editableDateInputs={true}
                             onChange={item => setDates([item.selection])}
@@ -119,7 +147,18 @@ const Header = ({type}) => {
                     </div>
                     <div className="headerSearchItem">
                         <FontAwesomeIcon icon={faPerson} className="headerIcon"/>
-                        <span onClick={()=>setOpenOptions(!openOptions)} className="headerSearchText">{`${options.adult} ${t("header.adult")} · ${options.children} ${t("header.children")} · ${options.room} ${t("header.room")}`}</span>
+                        <span
+                            role="button"
+                            tabIndex="0"
+                            onClick={() => setOpenOptions(!openOptions)}
+                            onKeyPress={(event) => {
+                                if (event.key === 'Enter') setOpenOptions(!openOptions);
+                            }}
+                            className="headerSearchText"
+                            aria-label={`${options.adult} ${t("header.adult")} · ${options.children} ${t("header.children")} · ${options.room} ${t("header.room")}`}
+                        >
+                            {`${options.adult} ${t("header.adult")} · ${options.children} ${t("header.children")} · ${options.room} ${t("header.room")}`}
+                        </span>
                         {openOptions && <div className="options">
                             <div className="optionItem">
                                 <span className="optionText">{t("header.adult2")}</span>
@@ -148,7 +187,13 @@ const Header = ({type}) => {
                         </div>}
                     </div>
                     <div className="headerSearchItem">
-                        <button className="headerBtn" onClick={handleSearch}>{t("header.search")}</button>
+                        <button
+                            className="headerBtn"
+                            onClick={handleSearch}
+                            aria-label={t("header.search")}
+                        >
+                            {t("header.search")}
+                        </button>
                     </div>
                 </div>
                 </>

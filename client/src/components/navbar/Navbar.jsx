@@ -1,6 +1,6 @@
 import "./navbar.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { faBed, faCalendarDays, faPerson, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,14 +15,14 @@ const Navbar = () => {
     const isLoginPage = location.pathname === "/login";
 
     const navigate = useNavigate()
-    const {dispatch} = useContext(AuthContext)
+    const { dispatch } = useContext(AuthContext)
 
     const handleTitle = () => {
-        navigate("/", {state : {}})
+        navigate("/", { state: {} })
     };
 
     const handleLogin = () => {
-        dispatch({type:"LOGIN_START"})
+        dispatch({ type: "LOGIN_START" })
         navigate("/login")
     };
 
@@ -31,16 +31,16 @@ const Navbar = () => {
     }
 
     const handleOptionClick = (option) => {
-        if(option == "login"){
-            dispatch({type:"LOGIN_START"})
-            navigate("/login", {state : true})
-        }else if(option == "register"){
-            dispatch({type:"LOGIN_START"})
-            navigate("/login", {state : false})
-        }else if(option == "profile"){
+        if (option === "login") {
+            dispatch({ type: "LOGIN_START" })
+            navigate("/login", { state: true })
+        } else if (option === "register") {
+            dispatch({ type: "LOGIN_START" })
+            navigate("/login", { state: false })
+        } else if (option === "profile") {
             navigate("/profile")
-        }else if(option == "logout"){
-            dispatch({type:"LOGOUT"})
+        } else if (option === "logout") {
+            dispatch({ type: "LOGOUT" })
             navigate("/")
         }
     }
@@ -52,33 +52,46 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <div className="navContainer">
-                <span className="logo" onClick={handleTitle}>Stardust Lodge</span>
+                <span className="logo" role="button" tabIndex="0" onClick={handleTitle}>
+                    Stardust Lodge
+                </span>
                 <div className="navItems">
-                {user ? (
-                    <div className="dropdown3">
-                    <button className="navButton" onClick={myFunction}>
-                        {user.username}
-                        <FontAwesomeIcon icon={faCaretDown} style={{ marginLeft: '10px' }} />
-                    </button>
-                    <button className="navButton" onClick={() => changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>{t("navbar.english")}</button>
+                    {user ? (
+                        <div className="dropdown3">
+                            <button className="navButton" aria-haspopup="true" aria-expanded="false" onClick={myFunction}>
+                                {user.username}
+                                <FontAwesomeIcon icon={faCaretDown} style={{ marginLeft: '10px' }} />
+                            </button>
+                            <button className="navButton" onClick={() => changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>
+                                {t("navbar.english")}
+                            </button>
 
-                    <div className="dropdown-content3" id="myDropdown3">
-                        <a href="#" onClick={() => handleOptionClick('profile')}>{t("navbar.profile")}</a>
-                        <a href="#" onClick={() => handleOptionClick('logout')}>{t("navbar.logout")}</a>
-                    </div>
-                    </div>
-                ) : isLoginPage ? null : (
-                    <div className="navItems">
-                    <button className="navButton" onClick={() => handleOptionClick('register')}>{t("navbar.login")}</button>
-                    <button className="navButton" onClick={() => handleOptionClick('login')}>{t("navbar.register")}</button>
-                    <button className="navButton" onClick={() => changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>{t("navbar.english")}</button>
-
-                    </div>
-                )}
+                            <div className="dropdown-content3" id="myDropdown3" role="menu">
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('profile')}>
+                                    {t("navbar.profile")}
+                                </a>
+                                <a href="#" role="menuitem" onClick={() => handleOptionClick('logout')}>
+                                    {t("navbar.logout")}
+                                </a>
+                            </div>
+                        </div>
+                    ) : isLoginPage ? null : (
+                        <div className="navItems">
+                            <button className="navButton" onClick={() => handleOptionClick('login')}>
+                                {t("navbar.login")}
+                            </button>
+                            <button className="navButton" onClick={() => handleOptionClick('register')}>
+                                {t("navbar.register")}
+                            </button>
+                            <button className="navButton" onClick={() => changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>
+                                {t("navbar.english")}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     )
 }
 
-export default Navbar
+export default Navbar;

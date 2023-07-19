@@ -136,7 +136,7 @@ const Hotel = () => {
               onClick={() => handleMove("l")}
             />
             <div className="sliderWrapper">
-              <img src={data.photos[slideNumber]} alt="" className="sliderImg" />
+              <img src={data.photos[slideNumber]} alt={"Room image " + (slideNumber+1) + " of " + data.name} className="sliderImg" />
             </div>
             <FontAwesomeIcon
               icon={faCircleArrowRight}
