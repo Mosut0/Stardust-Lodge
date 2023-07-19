@@ -174,9 +174,9 @@ const Checkout = () => {
     navigate("/profile", {state: event})
   };
 
-  const steps = {0:['Booking Information', null], 
-    1:['Payment Details', null], 
-    2:['Confirmation', null]
+  const steps = {0:[t('checkout.booking'), null], 
+    1:[t('checkout.payment'), null], 
+    2:[t('checkout.confirmation'), null]
   };
 
 
@@ -505,7 +505,7 @@ const Checkout = () => {
                 <Box sx={{ flex: '1 1 auto' }} />
 
                 <Button onClick={()=>handleNext(activeStep)}>
-                  {activeStep === Object.keys(steps).length - 1 ? 'Book' : 'Next'}
+                  {activeStep === Object.keys(steps).length - 1 ? t('checkout.book') : t("checkout.next")}
                 </Button>
               </Box>
             </React.Fragment>

@@ -66,6 +66,7 @@
             "ppn": "Price per night",
             "back": "Back",
             "next": "Next",
+            "book": "Book",
             "finish": "Finish",
             "fnamereq": "First name is required",
             "lnamereq": "Last name is required",

@@ -9,7 +9,7 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-cool-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../fetch/useFetch";
@@ -40,6 +40,12 @@ const Hotel = () => {
     const diffDays = Math.ceil(timeDiff / msPerDay)
     return diffDays;
   }
+
+  useEffect(() => {
+    if(error) {
+      navigate("/404")
+    }
+  }, [error])
 
   let nights;
   console.log(dates)
