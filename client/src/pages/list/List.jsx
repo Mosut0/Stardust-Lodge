@@ -34,7 +34,7 @@ const List = () => {
   const [openOptions, setOpenOptions] = useState(true)
 
   function apiUrl(){
-    let url = `http://localhost:5000/api/hotels?`;
+    let url = `https://seg125-f269f11245e5.herokuapp.com/api/hotels?`;
     if(destination == "All" || destination == ""){
       url += `city=Toronto&city=London&city=Paris&city=Dublin&min=${range[0] || 0}&max=${range[1] || 1000}&rooms=${options.room}`
     } else {

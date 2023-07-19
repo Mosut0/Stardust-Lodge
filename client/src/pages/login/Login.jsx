@@ -66,7 +66,7 @@ const Login = () => {
   
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", credentials);
+      const res = await axios.post("https://seg125-f269f11245e5.herokuapp.com/api/auth/login", credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
       console.log(data)
       if (data != null && data != true) {
@@ -104,7 +104,7 @@ const Login = () => {
         lname: registrationFields.lastName,
         password: credentials.password
       }
-      const res = await axios.post("http://localhost:5000/api/users", newUser);
+      const res = await axios.post("https://seg125-f269f11245e5.herokuapp.com/api/users", newUser);
       console.log("New user created:", res.data);
       setRegistrationSuccess(true);
     } catch (err) {

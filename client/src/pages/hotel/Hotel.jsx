@@ -28,7 +28,7 @@ const Hotel = () => {
   const { user } = useContext(AuthContext);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const { data, loading, error, reFetch } = useFetch(`http://localhost:5000/api/hotels/find/${hotel_id}`);
+  const { data, loading, error, reFetch } = useFetch(`https://seg125-f269f11245e5.herokuapp.com/api/hotels/find/${hotel_id}`);
   const {dates, options} = useContext(SearchContext)
   console.log(options)
   const [ratingValue, setRatingValue] = useState(0);
