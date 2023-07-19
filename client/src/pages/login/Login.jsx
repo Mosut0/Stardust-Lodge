@@ -146,6 +146,7 @@ const Login = () => {
       />
       <Container maxWidth="sm" sx={{ marginTop: '50px' }}>
         <Box
+          role="form"
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -247,24 +248,24 @@ const Login = () => {
             </Grid>
             <Grid item xs={12}>
               {isLogin ? (
-                <Button fullWidth variant="contained" onClick={handleLogin}>
+                <Button role="button" fullWidth variant="contained" onClick={handleLogin}>
                   {t("login.login")}
                 </Button>
               ) : (
-                <Button fullWidth variant="contained" onClick={handleRegister}>
+                <Button role="button" fullWidth variant="contained" onClick={handleRegister}>
                   {t("login.register")}
                 </Button>
               )}
-              {registrationSuccess && <span style={{ color: "green" }}>{t("login.success")}</span>}
-              {(isError && error) && <span style={{ color: "red" }}>{error.message}</span>}
+              {registrationSuccess && <span role="alert" style={{ color: "green" }}>{t("login.success")}</span>}
+              {(isError && error) && <span role="alert" style={{ color: "red" }}>{error.message}</span>}
             </Grid>
             <Grid item xs={12}>
               {isLogin ? (
-                <Button fullWidth onClick={toggleForm}>
+                <Button role="button" fullWidth onClick={toggleForm}>
                   {t("login.register")}
                 </Button>
               ) : (
-                <Button fullWidth onClick={toggleForm}>
+                <Button role="button" fullWidth onClick={toggleForm}>
                   {t("login.login")}
                 </Button>
               )}
