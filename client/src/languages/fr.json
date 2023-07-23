@@ -134,6 +134,15 @@
       "e12": "Oups ! Cette page n'existe pas.",
       "e21": "Oh oh ! Vous n'êtes pas connecté(e).",
       "e22": "Connectez-vous ou créez un compte pour accéder à votre profil."
-    }
+    },
+    "contact":{
+      "send": "Envoyer le message",
+      "name": "Nom",
+      "contact": "Contactez Nous",
+      "namereq": "Le nom est requis",
+      "emailreq": "L'email est requis",
+      "messagereq": "Le message est requis",
+      "success": "Message de contact soumis !"
+  }
   }
   

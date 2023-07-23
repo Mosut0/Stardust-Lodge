@@ -42,6 +42,8 @@ const Navbar = () => {
         } else if (option === "logout") {
             dispatch({ type: "LOGOUT" })
             navigate("/")
+        } else if (option === "contact"){
+            navigate("/contact")
         }
     }
 
@@ -58,6 +60,9 @@ const Navbar = () => {
                 <div className="navItems">
                     {user ? (
                         <div className="dropdown3">
+                            <button className="navButton" onClick={() => handleOptionClick('contact')}>
+                                {t("contact.contact")}
+                            </button>
                             <button className="navButton" aria-haspopup="true" aria-expanded="false" onClick={myFunction}>
                                 {user.username}
                                 <FontAwesomeIcon icon={faCaretDown} style={{ marginLeft: '10px' }} />
@@ -77,6 +82,9 @@ const Navbar = () => {
                         </div>
                     ) : isLoginPage ? null : (
                         <div className="navItems">
+                            <button className="navButton" onClick={() => handleOptionClick('contact')}>
+                                {t("contact.contact")}
+                            </button>
                             <button className="navButton" onClick={() => handleOptionClick('login')}>
                                 {t("navbar.login")}
                             </button>

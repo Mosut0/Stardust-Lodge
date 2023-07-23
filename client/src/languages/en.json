@@ -134,5 +134,14 @@
             "e12": "Oops! This page doesn't exist.",
             "e21": "Uh oh! You're not logged in.",
             "e22": "Login or create an account to access your profile."
+        },
+        "contact":{
+            "send": "Send Message",
+            "name": "Name",
+            "contact": "Contact Us",
+            "namereq": "Name is required",
+            "emailreq": "Email is required",
+            "messagereq": "Message is required",
+            "success": "Contact message submitted!"
         }
     }

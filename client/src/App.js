@@ -9,6 +9,7 @@ import Hotel from "./pages/hotel/Hotel"
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import NotFound from "./pages/notfound/NotFound";
+import ContactUs from "./pages/contactus/ContactUs";
 
 import './App.css';
 import Checkout from "./pages/checkout/Checkout";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/checkout" element={<Checkout/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/contact" element={<ContactUs/>}/>
         <Route path="/*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>
