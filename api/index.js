@@ -27,7 +27,8 @@ const corsOptions ={
     optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
-app.use(express.json())
+app.use(express.static('client'));
+app.use(express.json());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
@@ -44,7 +45,7 @@ app.use((err, req, res, next)=>{
     })
 })
 
-app.listen(process.env.PORT || 5000, ()=>{
+app.listen(process.env.PORT || 3000, ()=>{
     connect()
     console.log("Connected to backend.")
 });

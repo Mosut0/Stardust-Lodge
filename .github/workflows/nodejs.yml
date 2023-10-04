@@ -1,0 +1,60 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - master
+      - gke_deploy
+
+jobs:
+  test_frontend:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./client
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: ${{ env.working-directory }}
+      - run: npm test
+        working-directory: ${{ env.working-directory }}
+        env:
+          CI: true
+
+  test_backend:
+    runs-on: ubuntu-latest
+    env:
+      server: ./server
+      client: ./client
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Npm install server
+        run: npm install
+        working-directory: ${{ env.server }}
+      - name: Npm install client
+        run: npm install
+        working-directory: ${{ env.client }}
+      - name: Build the client
+        run: npm run-script build
+        working-directory: ${{ env.client }}
+      - run: npm test
+        working-directory: ${{ env.server }}
+        env:
+          CI: true
