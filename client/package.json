@@ -44,7 +44,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build --legacy-peer-deps",
+    "predeploy": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build && copy -R ./build ../api/client",
     "test": "react-scripts test",
